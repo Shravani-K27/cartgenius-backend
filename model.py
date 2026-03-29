@@ -2,15 +2,17 @@ import pandas as pd
 import mysql.connector
 from sklearn.metrics.pairwise import cosine_similarity
 import psycopg2
+import os
 
-# 🔹 Connect to MySQL
-conn = psycopg2.connect(
-    host="dpg-d74jo2h4tr6s73cqhpe0-a",
-    user="root",
-    password="gZyZyaCa9NQdyAO7uXYTwg3aP12Gnf7m",  
-    database="cartgenius"
-    port=5432
+conn = mysql.connector.connect(
+    host=os.getenv("MYSQLHOST"),
+    user=os.getenv("MYSQLUSER"),
+    password=os.getenv("MYSQLPASSWORD"),
+    database=os.getenv("MYSQLDATABASE"),
+    port=int(os.getenv("MYSQLPORT"))
 )
+
+cursor = conn.cursor()
 
 # 🔹 Load data from MySQL
 query = "SELECT * FROM transactions"
