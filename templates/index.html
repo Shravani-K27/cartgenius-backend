@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CartGenius</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f1f3f6;
+            margin: 0;
+        }
+
+        .header {
+            background-color: #232f3e;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        input {
+            padding: 10px;
+            width: 220px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #ff9900;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e68a00;
+        }
+
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: white;
+            width: 220px;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 8px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .card img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .loading {
+            font-size: 18px;
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h2>🛒 CartGenius - Smart Recommendations</h2>
+</div>
+
+<div class="container">
+    <input type="number" id="userId" placeholder="Enter User ID">
+    <button onclick="getRecommendations()">Get Recommendations</button>
+
+    <div id="result" class="products"></div>
+</div>
+
+<div class="products">
+    <div class="card" onclick="getRecommendations('WHITE HANGING HEART T-LIGHT HOLDER')">
+        <img src="/static/images/image1.jpg">
+        <h4>WHITE HANGING HEART T-LIGHT HOLDER</h4>
+    </div>
+
+    <div class="card" onclick="getRecommendations('REGENCY CAKESTAND 3 TIER')">
+        <img src="/static/images/image2.jpg">
+        <h4>REGENCY CAKESTAND 3 TIER</h4>
+    </div>
+
+    <div class="card" onclick="getRecommendations('JUMBO BAG RED RETROSPOT')">
+        <img src="/static/images/image3.jpg">
+        <h4>JUMBO BAG RED RETROSPOT</h4>
+    </div>
+</div>
+
+<script>
+function getRecommendations(productName) {
+    let result = document.getElementById("result");
+
+    result.innerHTML = "<p class='loading'>Loading recommendations...</p>";
+
+    fetch(`/recommend_item/${encodeURIComponent(productName)}`)
+    .then(response => response.json())
+    .then(data => {
+        result.innerHTML = "";
+
+        data.forEach(item => {
+            let card = document.createElement("div");
+            card.className = "card";
+
+            let images = [
+                "/static/images/image1.jpg",
+                "/static/images/image2.jpg",
+                "/static/images/image3.jpg",
+                "/static/images/image4.jpg",
+                "/static/images/image5.jpg"
+            ];
+
+            let imageUrl = images[Math.floor(Math.random() * images.length)];
+
+            card.innerHTML = `
+                <img src="${imageUrl}">
+                <h4>${item}</h4>
+                <p>⭐ 4.5 | ₹499</p>
+            `;
+
+            result.appendChild(card);
+        });
+    });
+}
+</script>
+
+</body>
+</html>
+
