@@ -1,6 +1,7 @@
 import pandas as pd
 import mysql.connector
 from sklearn.metrics.pairwise import cosine_similarity
+
 import os
 
 def get_connection():
@@ -10,11 +11,12 @@ def get_connection():
         password=os.getenv("MYSQLPASSWORD"),
         database=os.getenv("MYSQLDATABASE"),
         port=int(os.getenv("MYSQLPORT"))
+
+        conn = get_connection()
+        cursor = conn.cursor()
     )
 
 
-conn = get_connection()
-cursor = conn.cursor()
 print("DB HOST:", os.getenv("MYSQLHOST"))
 # 🔹 Load data from MySQL
 query = "SELECT * FROM transactions"
