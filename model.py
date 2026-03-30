@@ -3,14 +3,17 @@ import mysql.connector
 from sklearn.metrics.pairwise import cosine_similarity
 import os
 
-conn = mysql.connector.connect(
-    host=os.getenv("MYSQLHOST"),
-    user=os.getenv("MYSQLUSER"),
-    password=os.getenv("MYSQLPASSWORD"),
-    database=os.getenv("MYSQLDATABASE"),
-    port=int(os.getenv("MYSQLPORT"))
-)
+def get_connection():
+    return mysql.connector.connect(
+        host=os.getenv("MYSQLHOST"),
+        user=os.getenv("MYSQLUSER"),
+        password=os.getenv("MYSQLPASSWORD"),
+        database=os.getenv("MYSQLDATABASE"),
+        port=int(os.getenv("MYSQLPORT"))
+    )
 
+
+conn = get_connection()
 cursor = conn.cursor()
 print("DB HOST:", os.getenv("MYSQLHOST"))
 # 🔹 Load data from MySQL
