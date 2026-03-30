@@ -8,7 +8,7 @@ conn = mysql.connector.connect(
     user=os.getenv("MYSQLUSER"),
     password=os.getenv("MYSQLPASSWORD"),
     database=os.getenv("MYSQLDATABASE"),
-    port=os.getenv("MYSQLPORT")
+    port=int(os.getenv("MYSQLPORT"))
 )
 
 cursor = conn.cursor()
