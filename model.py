@@ -6,11 +6,11 @@ import os
 
 def get_connection():
     return mysql.connector.connect(
-        host=os.getenv("MYSQLHOST"),
-        user=os.getenv("MYSQLUSER"),
-        password=os.getenv("MYSQLPASSWORD"),
-        database=os.getenv("MYSQLDATABASE"),
-        port=int(os.getenv("MYSQLPORT"))
+        host=os.getenv("mysql.railway.internal"),
+        user=os.getenv("root"),
+        password=os.getenv("cqeqdqjymxhjpdObxngdwYrRsoAnJkUW"),
+        database=os.getenv("railway"),
+        port=int(os.getenv("3306"))
 
         conn = get_connection()
         cursor = conn.cursor()
